@@ -77,28 +77,22 @@ func main() {
 	socket.Connect()
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
 		var offer webrtc.SessionDescription
-		err := json.NewDecoder(strings.NewReader(message)).Decode(&offer)
-		if err != nil {
-			panic(err)
-		}
+		json.NewDecoder(strings.NewReader(message)).Decode(&offer)
 
-		err = peerConnection.SetRemoteDescription(offer)
-		if err != nil {
-			panic(err)
-		}
+		peerConnection.SetRemoteDescription(offer)
+
+		// Create answer
+		answer, _ := peerConnection.CreateAnswer(nil)
+
+		// Sets the LocalDescription, and starts our UDP listeners
+		peerConnection.SetLocalDescription(answer)
+
+		fmt.Println(answer)
+
+		b := new(bytes.Buffer)
+		json.NewEncoder(b).Encode(answer)
+		socket.SendText(b.String())
 	}
-
-	// Create answer
-	answer, err := peerConnection.CreateAnswer(nil)
-
-	// Sets the LocalDescription, and starts our UDP listeners
-	err = peerConnection.SetLocalDescription(answer)
-
-	fmt.Println(answer)
-
-	b := new(bytes.Buffer)
-	json.NewEncoder(b).Encode(answer)
-	socket.SendText(b.String())
 
 	//interrupting sequence
 	for {
