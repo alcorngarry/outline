@@ -94,6 +94,8 @@ func main() {
 	// Sets the LocalDescription, and starts our UDP listeners
 	err = peerConnection.SetLocalDescription(answer)
 
+	fmt.Println(answer)
+
 	b := new(bytes.Buffer)
 	json.NewEncoder(b).Encode(answer)
 	socket.SendText(b.String())
