@@ -89,15 +89,9 @@ func main() {
 
 	// Create answer
 	answer, err := peerConnection.CreateAnswer(nil)
-	if err != nil {
-		panic(err)
-	}
 
 	// Sets the LocalDescription, and starts our UDP listeners
 	err = peerConnection.SetLocalDescription(answer)
-	if err != nil {
-		panic(err)
-	}
 
 	b := new(bytes.Buffer)
 	json.NewEncoder(b).Encode(answer)
