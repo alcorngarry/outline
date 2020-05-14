@@ -89,15 +89,9 @@ func main() {
 
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
 		var answer webrtc.SessionDescription
-		err = json.NewDecoder(strings.NewReader(message)).Decode(&answer)
-		if err != nil {
-			panic(err)
-		}
+		json.NewDecoder(strings.NewReader(message)).Decode(&answer)
 
-		err = peerConnection.SetRemoteDescription(answer)
-		if err != nil {
-			panic(err)
-		}
+		peerConnection.SetRemoteDescription(answer)
 	}
 	//interrupting sequence
 	for {
