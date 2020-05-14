@@ -18,7 +18,7 @@ func main() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	socket := gowebsocket.New("ws://192.168.1.21:8080")
+	socket := gowebsocket.New("ws://192.168.1.21:9090")
 
 	config := webrtc.Configuration{
 		ICEServers: []webrtc.ICEServer{
