@@ -75,6 +75,7 @@ func main() {
 	})
 
 	socket.Connect()
+
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
 		var offer webrtc.SessionDescription
 		json.NewDecoder(strings.NewReader(message)).Decode(&offer)
@@ -87,7 +88,7 @@ func main() {
 		// Sets the LocalDescription, and starts our UDP listeners
 		peerConnection.SetLocalDescription(answer)
 
-		fmt.Println(answer)
+		fmt.Println(message)
 
 		b := new(bytes.Buffer)
 		json.NewEncoder(b).Encode(answer)

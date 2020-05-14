@@ -86,12 +86,10 @@ func main() {
 	socket.SendText(b.String())
 
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
-		if message != "" {
-			var answer webrtc.SessionDescription
-			json.NewDecoder(strings.NewReader(message)).Decode(&answer)
-			peerConnection.SetRemoteDescription(answer)
-		}
-		fmt.Println("this is ", message)
+		var answer webrtc.SessionDescription
+		json.NewDecoder(strings.NewReader(message)).Decode(&answer)
+		peerConnection.SetRemoteDescription(answer)
+		fmt.Println(message)
 	}
 
 	//interrupting sequence
