@@ -83,8 +83,6 @@ func main() {
 	json.NewEncoder(b).Encode(offer)
 
 	socket.Connect()
-
-	//send ip of wanted connection
 	socket.SendText(b.String())
 
 	socket.OnTextMessage = func(message string, socket gowebsocket.Socket) {
@@ -93,6 +91,14 @@ func main() {
 
 		peerConnection.SetRemoteDescription(answer)
 	}
+
+	socket.SendText(b.String())
+	socket.SendText(b.String())
+	socket.SendText(b.String())
+	socket.SendText(b.String())
+	socket.SendText(b.String())
+	socket.SendText(b.String())
+	socket.SendText(b.String())
 	//interrupting sequence
 	for {
 		select {

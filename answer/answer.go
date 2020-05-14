@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"os/signal"
 	"strings"
@@ -97,6 +98,15 @@ func main() {
 	json.NewEncoder(b).Encode(answer)
 	socket.SendText(b.String())
 
+	//interrupting sequence
+	for {
+		select {
+		case <-interrupt:
+			log.Println("interrupt")
+			socket.Close()
+			return
+		}
+	}
 	// Block forever
 	select {}
 
